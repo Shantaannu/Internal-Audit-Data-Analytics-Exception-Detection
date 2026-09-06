@@ -1,8 +1,16 @@
--- Identify likely duplicate transactions
 SELECT
-    Account_ID, Transaction_Date, Amount_EUR, Transaction_Type, Vendor_ID,
-    COUNT(*) AS transaction_count
+    Account_ID,
+    Amount_EUR,
+    Transaction_Type,
+    Vendor_ID,
+    CAST(Transaction_Date AS DATE) AS Transaction_Date,
+    COUNT(*) AS Transaction_Count
 FROM banking_transactions
-GROUP BY Account_ID, Transaction_Date, Amount_EUR, Transaction_Type, Vendor_ID
+GROUP BY
+    Account_ID,
+    Amount_EUR,
+    Transaction_Type,
+    Vendor_ID,
+    CAST(Transaction_Date AS DATE)
 HAVING COUNT(*) > 1
-ORDER BY transaction_count DESC;
+ORDER BY Transaction_Count DESC;
